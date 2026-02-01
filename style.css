@@ -1,225 +1,252 @@
 :root{
-      --bg:#0b1020;
-        --text:#e9ecff;
-          --muted:#aeb6da;
-            --line:rgba(255,255,255,.12);
+      --bg: #0f172a;
+        --card: #111827;
+          --ink: #e5e7eb;
+            --muted: #9ca3af;
 
-              --primary:#4f46e5;
-                --primary2:#312e81;
-                  --danger:#ef4444;
-                    --danger2:#7f1d1d;
+              --primary: #22c55e;
+                --danger: #ef4444;
+                  --border: #1f2937;
 
-                      --radius:18px;
-                        --shadow: 0 12px 32px rgba(0,0,0,.38);
-                          --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-                            --sans: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+                    --cell: #1f2937;
+                      --cell-empty: #0b1220;
+                        --cell-mark: #16a34a;
+                        }
 
-                              --paper:#f7f2dc;
-                                --paper2:#efe3a6;
-                                  --ink:#141414;
+                        *{
+                          box-sizing: border-box;
+                          }
 
-                                    --good:#22c55e;
-                                      --warn:#f59e0b;
-                                      }
+                          body{
+                            margin: 0;
+                              font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+                                background: var(--bg);
+                                  color: var(--ink);
+                                  }
 
-                                      *{box-sizing:border-box}
-                                      html,body{height:100%}
-                                      body{
-                                        margin:0;
-                                          font-family:var(--sans);
-                                            background:
-                                                radial-gradient(900px 500px at 20% 10%, rgba(99,102,241,.25), transparent 60%),
-                                                    radial-gradient(700px 450px at 80% 25%, rgba(34,197,94,.18), transparent 60%),
-                                                        var(--bg);
-                                                          color:var(--text);
+                                  /* ===== Layout ===== */
+                                  .container{
+                                    max-width: 720px;
+                                      margin: 0 auto;
+                                        padding: 16px;
+                                        }
+
+                                        .stack > * + *{
+                                          margin-top: 16px;
+                                          }
+
+                                          .row{
+                                            display: flex;
+                                              flex-wrap: wrap;
+                                                gap: 8px;
+                                                }
+
+                                                .topbar{
+                                                  background: #020617;
+                                                    border-bottom: 1px solid var(--border);
+                                                    }
+
+                                                    .topbar__inner{
+                                                      padding: 16px;
+                                                      }
+
+                                                      .title{
+                                                        margin: 0;
+                                                          font-size: 20px;
                                                           }
 
-                                                          .container{max-width:960px;margin:0 auto;padding:14px}
-                                                          a{color:inherit;text-decoration:none}
+                                                          .subtitle{
+                                                            margin: 4px 0 0;
+                                                              font-size: 13px;
+                                                                color: var(--muted);
+                                                                }
 
-                                                          .topbar{
-                                                            position:sticky;top:0;z-index:10;
-                                                              backdrop-filter: blur(10px);
-                                                                background: linear-gradient(to bottom, rgba(11,16,32,.88), rgba(11,16,32,.38));
-                                                                  border-bottom: 1px solid var(--line);
-                                                                  }
-                                                                  .topbar__inner{display:flex;flex-direction:column;gap:10px}
-                                                                  .title{margin:0;font-size:18px;letter-spacing:.2px}
-                                                                  .subtitle{margin:0;color:var(--muted);font-size:12.5px;line-height:1.35}
+                                                                /* ===== Card ===== */
+                                                                .card{
+                                                                  background: var(--card);
+                                                                    border: 1px solid var(--border);
+                                                                      border-radius: 16px;
+                                                                        overflow: hidden;
+                                                                        }
 
-                                                                  .card{
-                                                                    background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
-                                                                      border:1px solid var(--line);
-                                                                        border-radius: var(--radius);
-                                                                          box-shadow: var(--shadow);
-                                                                            overflow:hidden;
+                                                                        .card__head{
+                                                                          padding: 12px 16px;
+                                                                            border-bottom: 1px solid var(--border);
                                                                             }
-                                                                            .card__head{
-                                                                              padding:12px 12px 10px;
-                                                                                border-bottom:1px solid var(--line);
-                                                                                  background: rgba(0,0,0,.12);
-                                                                                  }
-                                                                                  .card__body{padding:12px}
 
-                                                                                  .stack{display:grid;gap:12px}
-                                                                                  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+                                                                            .card__body{
+                                                                              padding: 16px;
+                                                                              }
 
-                                                                                  .pill{
-                                                                                    display:inline-flex;align-items:center;gap:8px;
-                                                                                      padding:8px 10px;border-radius:999px;
-                                                                                        border:1px solid var(--line);
-                                                                                          background: rgba(0,0,0,.12);
-                                                                                            color:var(--muted);
-                                                                                              font-size:12px;
+                                                                              /* ===== Pills ===== */
+                                                                              .pill{
+                                                                                background: #020617;
+                                                                                  border: 1px solid var(--border);
+                                                                                    border-radius: 999px;
+                                                                                      padding: 4px 10px;
+                                                                                        font-size: 12px;
+                                                                                        }
+
+                                                                                        /* ===== Buttons ===== */
+                                                                                        .btnbar{
+                                                                                          display: flex;
+                                                                                            flex-wrap: wrap;
+                                                                                              gap: 8px;
                                                                                               }
-                                                                                              .pill code{
-                                                                                                font-family:var(--mono);
-                                                                                                  font-size:12px;
-                                                                                                    color:var(--text);
-                                                                                                    }
 
-                                                                                                    /* Big thumb buttons */
-                                                                                                    .btnbar{display:grid;grid-template-columns:1fr;gap:10px}
-                                                                                                    .btn{
-                                                                                                      width:100%;
-                                                                                                        border:1px solid var(--line);
-                                                                                                          border-radius: 16px;
-                                                                                                            padding:14px 14px;
-                                                                                                              font-weight:900;
-                                                                                                                font-size:15px;
-                                                                                                                  color:var(--text);
-                                                                                                                    background: rgba(0,0,0,.18);
-                                                                                                                      box-shadow: var(--shadow);
-                                                                                                                        cursor:pointer;
-                                                                                                                          text-align:center;
-                                                                                                                          }
-                                                                                                                          .btn:active{transform: translateY(1px); opacity:.96}
-                                                                                                                          .btn--primary{background: linear-gradient(180deg, var(--primary), var(--primary2))}
-                                                                                                                          .btn--danger{background: linear-gradient(180deg, var(--danger), var(--danger2))}
-                                                                                                                          .btn--ghost{background: transparent; box-shadow:none}
-                                                                                                                          .btn--small{padding:10px 12px; font-size:13px; border-radius:14px; width:auto}
+                                                                                              .btn{
+                                                                                                appearance: none;
+                                                                                                  border: 1px solid var(--border);
+                                                                                                    background: #020617;
+                                                                                                      color: var(--ink);
+                                                                                                        padding: 8px 12px;
+                                                                                                          border-radius: 10px;
+                                                                                                            font-size: 13px;
+                                                                                                              cursor: pointer;
+                                                                                                              }
 
-                                                                                                                          /* Caller current number */
-                                                                                                                          .bigNumber{
-                                                                                                                            font-family: var(--mono);
-                                                                                                                              font-size:64px;
-                                                                                                                                font-weight:1000;
-                                                                                                                                  letter-spacing:1px;
-                                                                                                                                    line-height:1;
-                                                                                                                                      text-align:center;
-                                                                                                                                        padding:14px 12px;
-                                                                                                                                          border-radius: 18px;
-                                                                                                                                            background: rgba(0,0,0,.18);
-                                                                                                                                              border:1px dashed rgba(255,255,255,.18);
+                                                                                                              .btn--primary{
+                                                                                                                background: var(--primary);
+                                                                                                                  border-color: var(--primary);
+                                                                                                                    color: #022c22;
+                                                                                                                      font-weight: 600;
+                                                                                                                      }
+
+                                                                                                                      .btn--danger{
+                                                                                                                        background: var(--danger);
+                                                                                                                          border-color: var(--danger);
+                                                                                                                            color: #fff;
+                                                                                                                              font-weight: 600;
+                                                                                                                              }
+
+                                                                                                                              .btn--ghost{
+                                                                                                                                background: transparent;
+                                                                                                                                }
+
+                                                                                                                                .btn--small{
+                                                                                                                                  padding: 4px 8px;
+                                                                                                                                    font-size: 12px;
+                                                                                                                                    }
+
+                                                                                                                                    /* ===== Big Number ===== */
+                                                                                                                                    .bigNumber{
+                                                                                                                                      font-size: 64px;
+                                                                                                                                        font-weight: 800;
+                                                                                                                                          text-align: center;
+                                                                                                                                            margin: 8px 0;
+                                                                                                                                            }
+
+                                                                                                                                            /* ===== Ticket ===== */
+                                                                                                                                            .ticket{
+                                                                                                                                              overflow-x: auto;
                                                                                                                                               }
 
-                                                                                                                                              /* Ticket */
-                                                                                                                                              .ticket{
-                                                                                                                                                background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
-                                                                                                                                                  border:1px solid var(--line);
-                                                                                                                                                    border-radius: 18px;
-                                                                                                                                                      padding:12px;
-                                                                                                                                                      }
-                                                                                                                                                      .ticket__grid{
-                                                                                                                                                        display:grid;
-                                                                                                                                                          grid-template-columns: repeat(8, 1fr);
-                                                                                                                                                            gap:8px;
-                                                                                                                                                            }
+                                                                                                                                              .ticket__grid{
+                                                                                                                                                display: grid;
+                                                                                                                                                  grid-template-columns: repeat(9, 1fr); /* 9 cột */
+                                                                                                                                                    gap: 6px;
+                                                                                                                                                    }
 
-                                                                                                                                                            .cell{
-                                                                                                                                                              user-select:none;
-                                                                                                                                                                -webkit-tap-highlight-color: transparent;
-                                                                                                                                                                  border-radius: 12px;
-                                                                                                                                                                    padding:14px 0;
-                                                                                                                                                                      font-family: var(--mono);
-                                                                                                                                                                        font-weight:1000;
-                                                                                                                                                                          font-size:16px;
-                                                                                                                                                                            cursor:pointer;
-                                                                                                                                                                              text-align:center;
+                                                                                                                                                    /* ===== Cells ===== */
+                                                                                                                                                    .cell{
+                                                                                                                                                      background: var(--cell);
+                                                                                                                                                        border: 1px solid var(--border);
+                                                                                                                                                          border-radius: 10px;
+                                                                                                                                                            aspect-ratio: 1/1;
+                                                                                                                                                              font-size: 14px;
+                                                                                                                                                                font-weight: 600;
+                                                                                                                                                                  color: var(--ink);
+                                                                                                                                                                    display: flex;
+                                                                                                                                                                      align-items: center;
+                                                                                                                                                                        justify-content: center;
+                                                                                                                                                                          cursor: pointer;
+                                                                                                                                                                          }
 
-                                                                                                                                                                                border:1px solid rgba(0,0,0,.25);
-                                                                                                                                                                                  background: var(--paper);
-                                                                                                                                                                                    color: var(--ink);
+                                                                                                                                                                          .cell--empty{
+                                                                                                                                                                            background: var(--cell-empty);
+                                                                                                                                                                              color: #1f2937;
+                                                                                                                                                                              }
+
+                                                                                                                                                                              .cell.is-marked{
+                                                                                                                                                                                background: var(--cell-mark);
+                                                                                                                                                                                  border-color: var(--cell-mark);
+                                                                                                                                                                                    color: #052e16;
                                                                                                                                                                                     }
 
-                                                                                                                                                                                    .cell--empty{
-                                                                                                                                                                                      background: var(--paper2);
-                                                                                                                                                                                        border:1px solid rgba(0,0,0,.18);
-                                                                                                                                                                                          color: rgba(0,0,0,.0);
-                                                                                                                                                                                          }
+                                                                                                                                                                                    /* ===== Footer ===== */
+                                                                                                                                                                                    .footer{
+                                                                                                                                                                                      text-align: center;
+                                                                                                                                                                                        font-size: 12px;
+                                                                                                                                                                                          color: var(--muted);
+                                                                                                                                                                                            padding-bottom: 16px;
+                                                                                                                                                                                            }
 
-                                                                                                                                                                                          .cell.is-marked{
-                                                                                                                                                                                            background: rgba(34,197,94,.25);
-                                                                                                                                                                                              border-color: rgba(34,197,94,.55);
-                                                                                                                                                                                                color: var(--ink);
-                                                                                                                                                                                                }
+                                                                                                                                                                                            /* ===== History Modal ===== */
+                                                                                                                                                                                            .backdrop{
+                                                                                                                                                                                              position: fixed;
+                                                                                                                                                                                                inset: 0;
+                                                                                                                                                                                                  background: rgba(0, 0, 0, 0.75); /* đậm hơn */
+                                                                                                                                                                                                    backdrop-filter: blur(4px);      /* mờ nền sau */
+                                                                                                                                                                                                      display: none;
+                                                                                                                                                                                                        align-items: center;
+                                                                                                                                                                                                          justify-content: center;
+                                                                                                                                                                                                            z-index: 1000;
+                                                                                                                                                                                                            }
 
-                                                                                                                                                                                                .cell--empty.is-marked{
-                                                                                                                                                                                                  color: var(--ink);
-                                                                                                                                                                                                    position: relative;
-                                                                                                                                                                                                    }
-                                                                                                                                                                                                    .cell--empty.is-marked::after{
-                                                                                                                                                                                                      content: "✕";
-                                                                                                                                                                                                        font-weight: 1000;
-                                                                                                                                                                                                          font-size: 18px;
-                                                                                                                                                                                                          }
+                                                                                                                                                                                                            .backdrop.open{
+                                                                                                                                                                                                              display: flex;
+                                                                                                                                                                                                              }
 
-                                                                                                                                                                                                          .cell.is-called{
-                                                                                                                                                                                                            background: rgba(245,158,11,.25);
-                                                                                                                                                                                                              border-color: rgba(245,158,11,.55);
-                                                                                                                                                                                                                color: var(--ink);
-                                                                                                                                                                                                                }
-                                                                                                                                                                                                                .cell.is-now{
-                                                                                                                                                                                                                  outline: 2px solid rgba(245,158,11,.75);
-                                                                                                                                                                                                                    box-shadow: 0 0 0 6px rgba(245,158,11,.12);
-                                                                                                                                                                                                                    }
+                                                                                                                                                                                                              .modal{
+                                                                                                                                                                                                                background: #f9fafb; /* trắng nổi bật */
+                                                                                                                                                                                                                  color: #020617;
+                                                                                                                                                                                                                    border-radius: 16px;
+                                                                                                                                                                                                                      width: 92%;
+                                                                                                                                                                                                                        max-width: 480px;
+                                                                                                                                                                                                                          max-height: 80vh;
+                                                                                                                                                                                                                            overflow: hidden;
+                                                                                                                                                                                                                              display: flex;
+                                                                                                                                                                                                                                flex-direction: column;
+                                                                                                                                                                                                                                  box-shadow: 0 20px 40px rgba(0,0,0,0.6); /* bóng đậm */
+                                                                                                                                                                                                                                  }
 
-                                                                                                                                                                                                                    /* Modal */
-                                                                                                                                                                                                                    .backdrop{
-                                                                                                                                                                                                                      position:fixed;inset:0;z-index:60;
-                                                                                                                                                                                                                        display:none;align-items:center;justify-content:center;
-                                                                                                                                                                                                                          background: rgba(0,0,0,.55);
-                                                                                                                                                                                                                            padding:14px;
-                                                                                                                                                                                                                            }
-                                                                                                                                                                                                                            .backdrop.open{display:flex}
-                                                                                                                                                                                                                            .modal{
-                                                                                                                                                                                                                              width:min(720px, 100%);
-                                                                                                                                                                                                                                border-radius: 18px;
-                                                                                                                                                                                                                                  border:1px solid var(--line);
-                                                                                                                                                                                                                                    box-shadow: var(--shadow);
-                                                                                                                                                                                                                                      background: linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.03));
-                                                                                                                                                                                                                                        overflow:hidden;
-                                                                                                                                                                                                                                        }
-                                                                                                                                                                                                                                        .modal__head{
-                                                                                                                                                                                                                                          padding:12px;
-                                                                                                                                                                                                                                            display:flex;align-items:center;justify-content:space-between;gap:10px;
-                                                                                                                                                                                                                                              border-bottom:1px solid var(--line);
-                                                                                                                                                                                                                                                background: rgba(0,0,0,.12);
+                                                                                                                                                                                                                                  .modal__head{
+                                                                                                                                                                                                                                    padding: 12px 16px;
+                                                                                                                                                                                                                                      border-bottom: 1px solid #e5e7eb;
+                                                                                                                                                                                                                                        display: flex;
+                                                                                                                                                                                                                                          justify-content: space-between;
+                                                                                                                                                                                                                                            align-items: center;
+                                                                                                                                                                                                                                            }
+
+                                                                                                                                                                                                                                            .modal__body{
+                                                                                                                                                                                                                                              padding: 16px;
+                                                                                                                                                                                                                                                overflow-y: auto;
                                                                                                                                                                                                                                                 }
-                                                                                                                                                                                                                                                .modal__body{padding:12px}
-                                                                                                                                                                                                                                                .chips{display:flex;flex-wrap:wrap;gap:8px}
-                                                                                                                                                                                                                                                .chip{
-                                                                                                                                                                                                                                                  font-family: var(--mono);
-                                                                                                                                                                                                                                                    font-weight:1000;
-                                                                                                                                                                                                                                                      font-size:12px;
-                                                                                                                                                                                                                                                        padding:8px 10px;
-                                                                                                                                                                                                                                                          border-radius:999px;
-                                                                                                                                                                                                                                                            border:1px solid var(--line);
-                                                                                                                                                                                                                                                              background: rgba(0,0,0,.12);
-                                                                                                                                                                                                                                                                color: var(--text);
-                                                                                                                                                                                                                                                                }
 
-                                                                                                                                                                                                                                                                .footer{
-                                                                                                                                                                                                                                                                  text-align:center;
-                                                                                                                                                                                                                                                                    color: var(--muted);
-                                                                                                                                                                                                                                                                      font-size:12px;
-                                                                                                                                                                                                                                                                        margin: 14px 0 6px;
-                                                                                                                                                                                                                                                                        }
+                                                                                                                                                                                                                                                /* ===== Chips ===== */
+                                                                                                                                                                                                                                                .chips{
+                                                                                                                                                                                                                                                  display: flex;
+                                                                                                                                                                                                                                                    flex-wrap: wrap;
+                                                                                                                                                                                                                                                      gap: 8px;
+                                                                                                                                                                                                                                                      }
 
-                                                                                                                                                                                                                                                                        @media (min-width: 900px){
-                                                                                                                                                                                                                                                                          .topbar__inner{flex-direction:row;align-items:flex-start;justify-content:space-between}
-                                                                                                                                                                                                                                                                            .btnbar{grid-template-columns: repeat(2, 1fr)}
-                                                                                                                                                                                                                                                                              .bigNumber{font-size:72px}
-                                                                                                                                                                                                                                                                                .cell{font-size:16px}
-                                                                                                                                                                                                                                                                                
+                                                                                                                                                                                                                                                      .chip{
+                                                                                                                                                                                                                                                        background: #111827;
+                                                                                                                                                                                                                                                          color: #e5e7eb;
+                                                                                                                                                                                                                                                            padding: 6px 10px;
+                                                                                                                                                                                                                                                              border-radius: 999px;
+                                                                                                                                                                                                                                                                font-size: 13px;
+                                                                                                                                                                                                                                                                  font-weight: 600;
+                                                                                                                                                                                                                                                                  }
+
+                                                                                                                                                                                                                                                                  /* ===== Mobile ===== */
+                                                                                                                                                                                                                                                                  @media (max-width: 480px){
+                                                                                                                                                                                                                                                                    .bigNumber{
+                                                                                                                                                                                                                                                                        font-size: 48px;
+                                                                                                                                                                                                                                                                          }
+
+                                                                                                                                                                                                                                                                            .cell{
+                                                                                                                                                                                                                                                                                font-size: 12px;
+                                                                                                                                                                                                                                                                                  }
+                                                                                                                                                                                                                                                                                  
 }
