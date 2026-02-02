@@ -255,8 +255,19 @@ a {
   -webkit-overflow-scrolling: touch;
   padding-bottom: 2px;
 }
+
+.tickets.is-single {
+  justify-content: center;
+  overflow-x: hidden;
+  scroll-snap-type: none;
+}
+
+.tickets.is-single .ticket--snap {
+  flex: 0 0 94%;
+}
+
 .ticket--snap {
-  flex: 0 0 92%;
+  flex: 0 0 94%;
   scroll-snap-align: start;
 }
 
@@ -282,7 +293,7 @@ a {
 .cell {
   user-select: none;
   -webkit-tap-highlight-color: transparent;
-  border-radius: 12px;
+  border-radius: 4px;
   padding: 14px 0;
   font-family: var(--mono);
   font-weight: 1000;
@@ -487,7 +498,7 @@ a {
   }
 }
 
-@media (max-width: 420px) {
+@media (max-width: 450px) {
   .ticket {
     padding: 5px;
   }

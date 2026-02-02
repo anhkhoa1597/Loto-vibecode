@@ -515,13 +515,20 @@
         }
       }
 
+      const ticketsEl = document.getElementById("tickets");
+      function updateTicketsLayout() {
+        const shown = (state.showTicket1 ? 1 : 0) + (state.showTicket2 ? 1 : 0);
+        ticketsEl.classList.toggle("is-single", shown === 1);
+        if (shown === 1) ticketsEl.scrollTo({ left: 0, behavior: "smooth" });
+      }
+
       function renderTickets() {
         if (!cachedTickets) cachedTickets = buildTickets(state.seed);
 
         // bật/tắt UI nút
         ticket1Toggle.classList.toggle("is-on", state.showTicket1);
         ticket2Toggle.classList.toggle("is-on", state.showTicket2);
-
+        updateTicketsLayout();
         // render grid1
         if (state.showTicket1) {
           grid1.parentElement.style.display = ""; // ticket 1 wrapper
