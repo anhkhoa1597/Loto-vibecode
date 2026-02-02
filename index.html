@@ -12,7 +12,7 @@
         <div class="topbar__row1">
           <h1 class="title">Lô Tô</h1>
           <div class="pill">
-            Mã tờ: <code id="seedText">--</code>
+            Link của tờ: <code hidden id="seedText">--</code>
             <button
               id="btnCopyLink"
               class="iconBtn"
@@ -27,7 +27,6 @@
 
         <div class="row">
           <div class="pill">
-            Chế độ:
             <button id="modePlayer" class="seg is-on" type="button">
               Người chơi
             </button>
@@ -36,8 +35,10 @@
 
           <div class="pill">
             Tờ:
-            <button id="oneTicket" class="seg is-on" type="button">Đơn</button>
-            <button id="twoTicket" class="seg" type="button">Đôi</button>
+            <button id="ticket1Toggle" class="seg is-on" type="button">
+              1
+            </button>
+            <button id="ticket2Toggle" class="seg" type="button">2</button>
           </div>
         </div>
 
@@ -45,6 +46,7 @@
           id="ticketLockHint"
           class="subtitle"
           style="margin: 0; display: none"
+          hidden
         >
           Đang có đánh dấu → không đổi được 1/2 tờ.
         </p>
@@ -54,7 +56,7 @@
     <main class="container stack">
       <section class="card">
         <div class="card__head">
-          <div class="row" style="justify-content: flex-start; gap: 10px">
+          <div class="row">
             <div class="pill" aria-label="tools">
               <button
                 id="btnNewCard"
@@ -63,7 +65,7 @@
                 title="Tờ mới"
                 aria-label="Tờ mới"
               >
-                Tạo Tờ Mới
+                Tờ Khác
               </button>
               <button
                 id="btnResetMarks"
@@ -76,7 +78,6 @@
               </button>
             </div>
             <div id="callerAutoWrap" class="pill" style="display: none">
-              Đánh dấu:
               <button id="autoMarkOff" class="seg is-on" type="button">
                 Thủ công
               </button>
@@ -89,7 +90,7 @@
           <!-- Ticket area is the main screen -->
           <div class="ticketsWrap">
             <div class="tickets" id="tickets">
-              <div class="ticket ticket--snap">
+              <div class="ticket ticket--snap" id="ticket1Wrap">
                 <div class="ticket__grid" id="grid1"></div>
               </div>
 
@@ -105,7 +106,7 @@
         </div>
       </section>
 
-      <div class="footer">Chúc cả nhóm chơi vui!</div>
+      <!-- <div class="footer">Chúc cả nhóm chơi vui!</div> -->
     </main>
 
     <!-- Caller dock (fixed, same screen as ticket) -->
@@ -377,7 +378,8 @@
       let state = {
         seed: null,
         mode: "player", // "player" | "caller"
-        tickets: 1, // 1 | 2
+        showTicket1: true,
+        showTicket2: false, // 1 | 2
         autoMark: false, // caller option
         markedNums: [],
         markedCells: [], // includes ticket index
@@ -405,9 +407,10 @@
             state.current = null;
           }
         }
-
+        if (typeof state.showTicket1 !== "boolean") state.showTicket1 = true;
+        if (typeof state.showTicket2 !== "boolean") state.showTicket2 = false;
+        if (!state.showTicket1 && !state.showTicket2) state.showTicket1 = true;
         if (!state.seed) state.seed = makeSeed128();
-        if (![1, 2].includes(state.tickets)) state.tickets = 1;
         if (!["player", "caller"].includes(state.mode)) state.mode = "player";
         if (typeof state.autoMark !== "boolean") state.autoMark = false;
         if (!Array.isArray(state.markedNums)) state.markedNums = [];
@@ -426,8 +429,8 @@
       const modePlayer = document.getElementById("modePlayer");
       const modeCaller = document.getElementById("modeCaller");
 
-      const oneTicket = document.getElementById("oneTicket");
-      const twoTicket = document.getElementById("twoTicket");
+      const ticket1Toggle = document.getElementById("ticket1Toggle");
+      const ticket2Toggle = document.getElementById("ticket2Toggle");
       const ticketLockHint = document.getElementById("ticketLockHint");
 
       const btnNewCard = document.getElementById("btnNewCard");
@@ -487,10 +490,10 @@
         const locked = marks > 0;
 
         ticketLockHint.style.display = locked ? "" : "none";
-        oneTicket.disabled = locked;
-        twoTicket.disabled = locked;
-        oneTicket.classList.toggle("is-disabled", locked);
-        twoTicket.classList.toggle("is-disabled", locked);
+        ticket1Toggle.disabled = locked;
+        ticket2Toggle.disabled = locked;
+        ticket1Toggle.classList.toggle("is-disabled", locked);
+        ticket2Toggle.classList.toggle("is-disabled", locked);
 
         if (state.mode === "caller") {
           calledCount.textContent = String(state.called.length);
@@ -515,16 +518,25 @@
       function renderTickets() {
         if (!cachedTickets) cachedTickets = buildTickets(state.seed);
 
-        if (state.tickets === 2) {
-          setSegActive(twoTicket, oneTicket);
-          ticket2Wrap.style.display = "";
+        // bật/tắt UI nút
+        ticket1Toggle.classList.toggle("is-on", state.showTicket1);
+        ticket2Toggle.classList.toggle("is-on", state.showTicket2);
+
+        // render grid1
+        if (state.showTicket1) {
+          grid1.parentElement.style.display = ""; // ticket 1 wrapper
+          renderGrid(grid1, cachedTickets.t1, 1);
         } else {
-          setSegActive(oneTicket, twoTicket);
-          ticket2Wrap.style.display = "none";
+          grid1.parentElement.style.display = "none";
         }
 
-        renderGrid(grid1, cachedTickets.t1, 1);
-        if (state.tickets === 2) renderGrid(grid2, cachedTickets.t2, 2);
+        // render grid2
+        if (state.showTicket2) {
+          ticket2Wrap.style.display = "";
+          renderGrid(grid2, cachedTickets.t2, 2);
+        } else {
+          ticket2Wrap.style.display = "none";
+        }
 
         updateHeader();
       }
@@ -633,10 +645,20 @@
         renderAll();
       }
 
-      function setTicketsMode(n) {
+      function toggleTicket(which) {
         const locked = markedNumSet.size + markedCellSet.size > 0;
         if (locked) return;
-        state.tickets = n;
+
+        if (which === 1) state.showTicket1 = !state.showTicket1;
+        if (which === 2) state.showTicket2 = !state.showTicket2;
+
+        // không cho tắt cả 2
+        if (!state.showTicket1 && !state.showTicket2) {
+          // bật lại cái vừa tắt
+          if (which === 1) state.showTicket1 = true;
+          if (which === 2) state.showTicket2 = true;
+        }
+
         saveState();
         renderAll();
       }
@@ -743,8 +765,8 @@
       modePlayer.addEventListener("click", () => setMode("player"));
       modeCaller.addEventListener("click", () => setMode("caller"));
 
-      oneTicket.addEventListener("click", () => setTicketsMode(1));
-      twoTicket.addEventListener("click", () => setTicketsMode(2));
+      ticket1Toggle.addEventListener("click", () => toggleTicket(1));
+      ticket2Toggle.addEventListener("click", () => toggleTicket(2));
 
       autoMarkOff.addEventListener("click", () => setAutoMark(false));
       autoMarkOn.addEventListener("click", () => setAutoMark(true));

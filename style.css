@@ -9,7 +9,7 @@
   --danger: #ef4444;
   --danger2: #7f1d1d;
 
-  --radius: 18px;
+  --radius: 10px;
   --shadow: 0 12px 32px rgba(0, 0, 0, 0.38);
   --mono:
     ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
@@ -55,7 +55,7 @@ body {
 .container {
   max-width: 960px;
   margin: 0 auto;
-  padding: 14px;
+  padding: 7px;
 }
 a {
   color: inherit;
@@ -77,12 +77,13 @@ a {
 .topbar__inner {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
 }
 .topbar__row1 {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 7px;
 }
 .title {
   margin: 0;
@@ -108,12 +109,12 @@ a {
   overflow: hidden;
 }
 .card__head {
-  padding: 12px 12px 10px;
+  padding: 6px 6px 5px;
   border-bottom: 1px solid var(--line);
   background: rgba(0, 0, 0, 0.12);
 }
 .card__body {
-  padding: 12px;
+  padding: 6px;
 }
 
 .stack {
@@ -122,7 +123,7 @@ a {
 }
 .row {
   display: flex;
-  gap: 10px;
+  /* gap: 5px; */
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
@@ -131,8 +132,8 @@ a {
 .pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 8px 10px;
+  gap: 4px;
+  padding: 4px 5px;
   border-radius: 999px;
   border: 1px solid var(--line);
   background: rgba(0, 0, 0, 0.12);
@@ -227,10 +228,10 @@ a {
 }
 
 .iconBtn {
-  width: 40px;
-  height: 40px;
+  /* width: 40px;
+  height: 40px; */
   border-radius: 999px;
-  border: 1px solid var(--line);
+  border: none;
   background: rgba(0, 0, 0, 0.16);
   box-shadow: var(--shadow);
   color: var(--text);
@@ -267,7 +268,7 @@ a {
     rgba(255, 255, 255, 0.05)
   );
   border: 1px solid var(--line);
-  border-radius: 18px;
+  border-radius: 5px;
   padding: 12px;
 }
 
@@ -285,9 +286,10 @@ a {
   padding: 14px 0;
   font-family: var(--mono);
   font-weight: 1000;
-  font-size: 16px;
+  font-size: 18px;
   cursor: pointer;
   text-align: center;
+  line-height: 1;
 
   border: 1px solid rgba(0, 0, 0, 0.25);
   background: var(--paper);
@@ -487,15 +489,15 @@ a {
 
 @media (max-width: 420px) {
   .ticket {
-    padding: 10px;
+    padding: 5px;
   }
   .ticket__grid {
-    gap: 6px;
+    gap: 3px;
   }
   .cell {
-    padding: 12px 0;
-    font-size: 14px;
-    border-radius: 10px;
+    padding: 10px 0;
+    font-size: 18px;
+    border-radius: 4px;
   }
   .callerNum {
     width: 58px;
