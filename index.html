@@ -550,6 +550,7 @@
 
       function renderGrid(el, grid, ticketIndex) {
         el.innerHTML = "";
+
         for (let r = 0; r < ROWS; r++) {
           // --- INSERT SEPARATOR ---
           if (r > 0 && r % 3 === 0) {
@@ -557,11 +558,12 @@
             sep.className = "grid-separator";
 
             const span = document.createElement("span");
-            span.textContent = `Tấn Tài Tấn Lộc`;
+            span.textContent = "Tấn Tài Tấn Lộc";
             sep.appendChild(span);
 
             el.appendChild(sep);
           }
+
           for (let c = 0; c < COLS; c++) {
             const val = grid[r][c];
             const cellKey = `${ticketIndex}-${r}-${c}`;
@@ -569,9 +571,13 @@
             const b = document.createElement("button");
             b.type = "button";
 
+            // tạo span text để stretch
+            const text = document.createElement("span");
+            text.className = "cell__text";
+            text.textContent = val == null ? "" : String(val);
+
             if (val == null) {
               b.className = "cell cell--empty";
-              b.textContent = " ";
               if (markedCellSet.has(cellKey)) b.classList.add("is-marked");
 
               b.addEventListener("click", () => {
@@ -588,7 +594,6 @@
               });
             } else {
               b.className = "cell";
-              b.textContent = String(val);
               if (markedNumSet.has(val)) b.classList.add("is-marked");
 
               b.addEventListener("click", () => {
@@ -605,6 +610,7 @@
               });
             }
 
+            b.appendChild(text);
             el.appendChild(b);
           }
         }
