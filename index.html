@@ -158,14 +158,32 @@
             <div class="title" style="font-size: 15px; margin: 0">
               Lịch sử số đã ra
             </div>
-            <div class="subtitle" style="margin-top: 4px">
+            <div id="historySub" class="subtitle" style="margin-top: 4px">
               Theo thứ tự từ đầu đến hiện tại.
             </div>
           </div>
-          <button id="btnClose" class="btn btn--ghost btn--small" type="button">
-            ✖
-          </button>
+
+          <div class="modal__actions">
+            <button
+              id="btnSortHistory"
+              class="btn btn--ghost btn--small"
+              type="button"
+              title="Sắp xếp tăng dần / về thứ tự bốc"
+              aria-label="Sắp xếp tăng dần / về thứ tự bốc"
+            >
+              🔢
+            </button>
+
+            <button
+              id="btnClose"
+              class="btn btn--ghost btn--small"
+              type="button"
+            >
+              ✖
+            </button>
+          </div>
         </div>
+
         <div class="modal__body">
           <div id="historyChips" class="chips"></div>
           <div
@@ -448,6 +466,9 @@
       const btnHistory = document.getElementById("btnHistory");
       const btnResetCall = document.getElementById("btnResetCall");
 
+      const btnSortHistory = document.getElementById("btnSortHistory");
+      const historySub = document.getElementById("historySub");
+
       const grid1 = document.getElementById("grid1");
       const grid2 = document.getElementById("grid2");
       const ticket2Wrap = document.getElementById("ticket2Wrap");
@@ -461,6 +482,7 @@
       let markedCellSet = new Set();
       let calledSet = new Set();
       let cachedTickets = null;
+      let historySorted = false; // false: theo thứ tự bốc, true: sort tăng dần
 
       /* =======================
    Render
@@ -739,25 +761,40 @@
         renderAll();
       }
 
-      function openHistory() {
+      function renderHistory() {
         historyChips.innerHTML = "";
-        if (state.called.length === 0) {
+
+        const list = historySorted
+          ? [...state.called].sort((a, b) => a - b)
+          : state.called;
+
+        if (historySub) {
+          historySub.textContent = historySorted
+            ? "Đang sắp xếp: Tăng dần."
+            : "Theo thứ tự từ đầu đến hiện tại.";
+        }
+
+        if (list.length === 0) {
           historyEmpty.style.display = "";
         } else {
           historyEmpty.style.display = "none";
-          state.called.forEach((n) => {
+          list.forEach((n) => {
             const chip = document.createElement("span");
             chip.className = "chip";
             chip.textContent = n;
             historyChips.appendChild(chip);
           });
         }
+      }
+
+      function openHistory() {
+        renderHistory();
         backdrop.classList.add("open");
       }
+
       function closeHistory() {
         backdrop.classList.remove("open");
       }
-
       /* =======================
    Render all
 ======================= */
@@ -798,6 +835,11 @@
       btnDraw.addEventListener("click", drawNumber);
       btnHistory.addEventListener("click", openHistory);
       btnResetCall.addEventListener("click", resetCall);
+      btnSortHistory.addEventListener("click", () => {
+        historySorted = !historySorted;
+        // nếu modal đang mở thì render lại luôn
+        if (backdrop.classList.contains("open")) renderHistory();
+      });
 
       btnClose.addEventListener("click", closeHistory);
       backdrop.addEventListener("click", (e) => {
